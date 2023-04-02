@@ -5,6 +5,13 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
+exports.test = catchAsyncErrors(async (req, res, next) => {
+  console.log('testing')
+  res.status(200).json({
+    success: true,
+    message: "test",
+  });
+})
 
 // Register a user     => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -18,6 +25,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   //     width: 150,
   //     crop: "scale",
   //   });
+  console.log(req.body)
   const user = await User.create({
     ...req.body,
   });
