@@ -12,6 +12,7 @@ import Login from "./pages/Login-Signup/Login";
 import Discover from "./pages/Discover/Discover";
 import Signup from "./pages/Login-Signup/Signup";
 import Footer from "./components/Header/Footer";
+import MyProfile from "./pages/My-Profile/MyProfile";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -30,6 +31,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/discover" element={<Discover />} />
+          <Route path="/my-profile" element={<MyProfile />} />
         </Routes>
         <Footer />
       </Router>
