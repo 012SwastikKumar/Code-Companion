@@ -13,6 +13,8 @@ import Discover from "./pages/Discover/Discover";
 import Signup from "./pages/Login-Signup/Signup";
 import Footer from "./components/Header/Footer";
 import MyProfile from "./pages/My-Profile/MyProfile";
+import FAQs from "./pages/FAQs/FAQs";
+import Doubts from "./pages/Doubts/Doubts";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -32,6 +34,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/faq" element={<FAQs />} />
+          <Route path="/doubts" element={<Doubts />} />
         </Routes>
         <Footer />
       </Router>
