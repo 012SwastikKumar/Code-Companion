@@ -5,13 +5,7 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
-exports.test = catchAsyncErrors(async (req, res, next) => {
-  console.log('testing')
-  res.status(200).json({
-    success: true,
-    message: "test",
-  });
-})
+const APIFeatures = require("../utils/apiFeatures");
 
 // Register a user     => /api/v1/register
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -25,7 +19,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   //     width: 150,
   //     crop: "scale",
   //   });
-  console.log(req.body)
   const user = await User.create({
     ...req.body,
   });
@@ -50,6 +43,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const isPasswordMatched = await user.comparePassword(password);
 
   if (!isPasswordMatched) {
+    // console.log(user);
     return next(new ErrorHandler("Invalid Email or Password", 401));
   }
   sendToken(user, 200, res);
@@ -63,3 +57,35 @@ exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
     user,
   });
 });
+
+// Update User Profile     =>  /api/v1/me/update
+exports.updateUserProfile = catchAsyncErrors(async (req, res, next) => {
+  if (!req.body.id) {
+    return next(new ErrorHandler("Please enter a valid id", 500));
+  }
+  const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: true,
+  });
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+  res.status(200).json({
+    success: true,
+    message: "Profile Updated Successfully",
+    user,
+  });
+});
+
+
+// Get Filtered Users     =>  /api/v1/filtered-users
+exports.getFilteredUsers = catchAsyncErrors(async (req, res, next) => {
+  // const filteredUsers = new APIFeatures(User.find(), req.query).filter();
+  console.log(req.body);
+  res.status(200).json({
+    success: true,
+    users,
+  });
+} );
