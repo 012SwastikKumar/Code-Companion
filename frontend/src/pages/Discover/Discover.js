@@ -8,100 +8,59 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import FormGroup from '@mui/material/FormGroup';
+import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
+import { toast } from "react-hot-toast";
 
 const Discover = () => {
-  const persons = [
-    {
-      id: "1",
-      name: "Anjali Singh",
-      branch: "CSE",
-      sem: "5",
-      skillList: ["ux", "ui", "c++", "java", "python"],
-      facebookProfile: "url",
-      linkedinProfile: "url",
-      portfolio: "url",
-      githubProfile: "url",
-      whatsappContact: "91 720 XXXX 983",
-    },
-    {
-      id: "2",
-      name: "Pawan Pandey",
-      branch: "BCA",
-      sem: "7",
-      skillList: ["ux2", "ui2", "c++2", "java2", "python2"],
-      facebookProfile: "url",
-      linkedinProfile: "url",
-      portfolio: "url",
-      githubProfile: "url",
-      whatsappContact: "91 720 XXXX 983",
-    },
-    {
-      id: "3",
-      name: "Akshay Sai",
-      branch: "Physics",
-      sem: "8",
-      skillList: ["python3", "java3", "c++3", "java3", "python3"],
-      facebookProfile: "url",
-      linkedinProfile: "url",
-      portfolio: "url",
-      githubProfile: "url",
-      whatsappContact: "91 720 XXXX 983",
-    },
-    {
-      id: "4",
-      name: "Reshma Sharma",
-      branch: "EEE",
-      sem: "2",
-      skillList: ["ux", "ui", "ui", "c++", "java", "java", "python"],
-      facebookProfile: "url",
-      linkedinProfile: "url",
-      portfolio: "url",
-      githubProfile: "url",
-      whatsappContact: "91 720 XXXX 983",
-    },
-  ];
-
-  const [person, setPerson] = useState(persons);
-
-  const semesterList = ["1", "2", "3", "4", "5", "6", "7", "8"];
-
   const { user } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  const [uiux, setUIUX] = useState(false);
+  const [webDev, setWebDev] = useState(false);
+  const [androidDev, setAndroidDev] = useState(false);
+  const [blockchain, setBlockchain] = useState(false);
+  const [ethicalHacking, setEthicalHacking] = useState(false);
+  const [softwareTesting, setSoftwareTesting] = useState(false);
+  const [branch, setBranch] = useState("ANY");
+  const [semester, setSemester] = useState(0);
+  const [company, setCompany] = useState("ANY");
 
-  const load = {};
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
-  // const [uiux, setUIUX] = useState(false);
-  // const [webDev, setWebDev] = useState(false);
-  // const [androidDev, setAndroidDev] = useState(false);
-  // const [blockchain, setBlockchain] = useState(false);
-  // const [ethicalHacking, setEthicalHacking] = useState(false);
-  // const [softwareTesting, setSoftwareTesting] = useState(false);
-  const skillList = [];
-  const [skills, setSkills] = useState(skillList);
-
-  const [branch, setBranch] = useState();
-  const handleChangeRadioBranch = (e) => {
-    setBranch(e.target.value);
-  };
-
-  const [company, setCompany] = useState();
-  const handleChangeRadioCompany = (e) => {
-    setCompany(e.target.value);
-  };
-
-  const [semester, setSemester] = useState(1);
-  const handleChangeRadioSemester = (e) => {
-    setSemester(e.target.value);
-  };
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const query = {};
+      if (semester !== 0) query.sem = Number(semester);
+      if (branch !== "ANY") query.branch = branch;
+      if (company !== "ANY") query.company = company;
+      if (uiux) query.uiux = uiux;
+      if (webDev) query.webDev = webDev;
+      if (androidDev) query.androidDev = androidDev;
+      if (blockchain) query.blockchain = blockchain;
+      if (ethicalHacking) query.ethicalHacking = ethicalHacking;
+      if (softwareTesting) query.softwareTesting = softwareTesting;
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "/api/v1/filtered-users",
+        query,
+        config
+      );
+      if (data.users.length === 0) {
+        toast.error("No users found ");
+      } else {
+        setFilteredUsers(data.users);
+      }
+      console.log(data.users);
+    } catch (error) {}
   };
 
   useEffect(() => {}, [user, navigate]);
@@ -120,26 +79,44 @@ const Discover = () => {
                   <FormControlLabel
                     control={<Checkbox />}
                     label="UI/UX"
+                    onClick={(e) => {
+                      setUIUX(e.target.checked);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Web Development"
+                    onClick={(e) => {
+                      setWebDev(e.target.checked);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Android Development"
+                    onClick={(e) => {
+                      setAndroidDev(e.target.checked);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Blockchain Development"
+                    onClick={(e) => {
+                      setBlockchain(e.target.checked);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Ethical Hacking"
+                    onClick={(e) => {
+                      setEthicalHacking(e.target.checked);
+                    }}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Software Testing"
+                    onClick={(e) => {
+                      setSoftwareTesting(e.target.checked);
+                    }}
                   />
                 </FormGroup>
               </div>
@@ -153,47 +130,48 @@ const Discover = () => {
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     value={company}
-                    onChange={handleChangeRadioCompany}
+                    onChange={(e) => setCompany(e.target.value)}
                   >
                     <FormControlLabel
-                      value="amazon"
+                      value="AMAZON"
                       control={<Radio />}
                       label="Amazon"
                     />
                     <FormControlLabel
-                      value="apple"
+                      value="APPLE"
                       control={<Radio />}
                       label="Apple"
                     />
                     <FormControlLabel
-                      value="facebook"
+                      value="FACEBOOK"
                       control={<Radio />}
                       label="Facebook"
                     />
                     <FormControlLabel
-                      value="flipkart"
+                      value="FLIPKART"
                       control={<Radio />}
                       label="Flipkart"
                     />
                     <FormControlLabel
-                      value="google"
+                      value="GOOGLE"
                       control={<Radio />}
                       label="Google"
                     />
                     <FormControlLabel
-                      value="microsoft"
+                      value="MICROSOFT"
                       control={<Radio />}
                       label="Microsoft"
                     />
                     <FormControlLabel
-                      value="paytm"
+                      value="PAYTM"
                       control={<Radio />}
                       label="Paytm"
                     />
                     <FormControlLabel
-                      value="any"
+                      value="ANY"
                       control={<Radio />}
                       label="Any"
+                      defaultChecked
                     />
                   </RadioGroup>
                 </FormControl>
@@ -208,47 +186,48 @@ const Discover = () => {
                     aria-labelledby="demo-controlled-radio-buttons-group"
                     name="controlled-radio-buttons-group"
                     value={branch}
-                    onChange={handleChangeRadioBranch}
+                    onChange={(e) => setBranch(e.target.value)}
                   >
                     <FormControlLabel
-                      value="computer"
+                      value="CSE"
                       control={<Radio />}
                       label="Computer Science"
                     />
                     <FormControlLabel
-                      value="mechanical"
+                      value="ME"
                       control={<Radio />}
                       label="Mechanical"
                     />
                     <FormControlLabel
-                      value="electronics"
+                      value="ECE"
                       control={<Radio />}
                       label="Electronics"
                     />
                     <FormControlLabel
-                      value="electrical"
+                      value="EEE"
                       control={<Radio />}
                       label="Electrical"
                     />
                     <FormControlLabel
-                      value="chemical"
+                      value="CHEM"
                       control={<Radio />}
                       label="Chemical"
                     />
                     <FormControlLabel
-                      value="biotech"
+                      value="BIOTECH"
                       control={<Radio />}
                       label="Biotech"
                     />
                     <FormControlLabel
-                      value="textile"
+                      value="TXT"
                       control={<Radio />}
                       label="Textile"
                     />
                     <FormControlLabel
-                      value="any"
+                      value="ANY"
                       control={<Radio />}
                       label="Any"
+                      defaultChecked
                     />
                   </RadioGroup>
                 </FormControl>
@@ -262,20 +241,25 @@ const Discover = () => {
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={semester}
-                  onChange={handleChangeRadioSemester}
+                  onChange={(e) => setSemester(e.target.value)}
                 >
-                  <FormControlLabel value="1" control={<Radio />} label="1" />
-                  <FormControlLabel value="2" control={<Radio />} label="2" />
-                  <FormControlLabel value="3" control={<Radio />} label="3" />
-                  <FormControlLabel value="4" control={<Radio />} label="4" />
-                  <FormControlLabel value="5" control={<Radio />} label="5" />
-                  <FormControlLabel value="6" control={<Radio />} label="6" />
-                  <FormControlLabel value="7" control={<Radio />} label="7" />
-                  <FormControlLabel value="8" control={<Radio />} label="8" />
+                  <FormControlLabel value={1} control={<Radio />} label="1" />
+                  <FormControlLabel value={2} control={<Radio />} label="2" />
+                  <FormControlLabel value={3} control={<Radio />} label="3" />
+                  <FormControlLabel value={4} control={<Radio />} label="4" />
+                  <FormControlLabel value={5} control={<Radio />} label="5" />
+                  <FormControlLabel value={6} control={<Radio />} label="6" />
+                  <FormControlLabel value={7} control={<Radio />} label="7" />
+                  <FormControlLabel value={8} control={<Radio />} label="8" />
                   <FormControlLabel
-                    value="9"
+                    value={9}
                     control={<Radio />}
                     label="Pass Out"
+                  />
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio />}
+                    label="Any"
                   />
                 </RadioGroup>
               </FormControl>
@@ -288,20 +272,25 @@ const Discover = () => {
         </div>
 
         <div className="right-contents">
-          {persons.map((person, index) => {
+          {filteredUsers?.map((person, index) => {
             return (
               <DiscoverCard
                 key={index}
-                id={person.id}
-                name={person.name}
-                branch={person.branch}
-                sem={person.sem}
-                skillList={person.skillList}
-                facebookProfile={person.facebookProfile}
-                linkedinProfile={person.linkedinProfile}
-                portfolio={person.portfolio}
-                githubProfile={person.githubProfile}
-                whatsappContact={person.whatsappContact}
+                id={person?.id}
+                name={person?.name}
+                branch={person?.branch}
+                sem={person?.sem}
+                uiux={person?.uiux}
+                webDev={person?.webDev}
+                androidDev={person?.androidDev}
+                blockchain={person?.blockchain}
+                ethicalHacking={person?.ethicalHacking}
+                softwareTesting={person?.softwareTesting}
+                facebook={person?.facebook}
+                linkedIn={person?.linkedIn}
+                portfolio={person?.portfolio}
+                github={person?.github}
+                whatsApp={person?.whatsApp}
               />
             );
           })}
