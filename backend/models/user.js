@@ -45,12 +45,37 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter your branch"],
   },
+  sem: {
+    type: Number,
+    required: [true, "Please enter your semester"],
+  },
   year: {
     type: Number,
-    required: [true, "Please enter your year"],
+    // required: [true, "Please enter your year"],
   },
-  skills: {
-    type: [],
+  knowUIUX: {
+    type: Boolean,
+    default: false,
+  },
+  knowWebDev: {
+    type: Boolean,
+    default: false,
+  },
+  knowAndroidDev: {
+    type: Boolean,
+    default: false,
+  },
+  knowBlockchain: {
+    type: Boolean,
+    default: false,
+  },
+  knowEthicalHacking: {
+    type: Boolean,
+    default: false,
+  },
+  knowSoftwareTesting: {
+    type: Boolean,
+    default: false,
   },
   company: {
     type: String,

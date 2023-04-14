@@ -7,6 +7,7 @@ import coverImg from "../../images/MyProfile/cover.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { hideLoading, showLoading } from "../../redux/alertSlice";
+import { setUser } from "../../redux/userSlice";
 const MyProfile = () => {
 
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ const MyProfile = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [institute, setInstitute] = useState("");
-  const [course, setCourse] = useState("");
+  const [company, setCompany] = useState("");
   const [branch, setBranch] = useState("");
   const [year, setYear] = useState("");
   const [semester, setSemester] = useState("");
@@ -36,7 +37,7 @@ const MyProfile = () => {
         email,
         phone,
         institute,
-        course,
+        company,
         branch,
         year,
         semester,
@@ -66,17 +67,32 @@ const MyProfile = () => {
   };
   
   useEffect(() => {
-    if(!user){
-      navigate("/login");
+    if (!user) {
+      const isAuthenticatedUser = async () => {
+        try {
+          const response = await axios.get("/api/v1/isAuthenticatedUser");
+          if (response.data.success) {
+            dispatch(setUser(response.data.user));
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          return false;
+        }
+      };
+      if (isAuthenticatedUser() === false) {
+        navigate("/login");
+      }
     }else{
       setName(user.name);
       setEmail(user.email);
       setPhone(user.phone);
       setInstitute(user.institute);
-      setCourse(user.course);
+      setCompany(user.company);
       setBranch(user.branch);
       setYear(user.year);
-      setSemester(user.semester);
+      setSemester(user.sem);
       setLinkedIn(user.linkedIn);
       setInstagram(user.instagram);
       setWhatsApp(user.whatsApp);
@@ -95,8 +111,8 @@ const MyProfile = () => {
             <div className="profile">
               <img className="profile__img" src={avatarImg} alt="profile-img" />
               <div className="profile__name__email">
-                <h2 className="profile__name">{user.name}</h2>
-                <h3 className="profile__email">{user.email}</h3>
+                <h2 className="profile__name">{user?.name}</h2>
+                <h3 className="profile__email">{user?.email}</h3>
               </div>
             </div>
             <div className="buttons">
@@ -193,16 +209,16 @@ const MyProfile = () => {
                 />
               </div>
               <div className="component">
-                <p className="component__lable">Course : </p>
+                <p className="component__lable">Company : </p>
                 <input
-                  id="course"
-                  name="course"
-                  value={course}
+                  id="company"
+                  name="company"
+                  value={company}
                   size="30"
                   onChange={(e) => {
-                    setCourse(e.target.value);
+                    setCompany(e.target.value);
                   }}
-                  placeholder="Course"
+                  placeholder="Company"
                   className="component__input"
                 />
               </div>
