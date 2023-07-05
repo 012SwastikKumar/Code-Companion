@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,7 +12,9 @@ import TextField from "@mui/material/TextField";
 import { hideLoading, showLoading } from "../../redux/alertSlice";
 
 const Signup = () => {
+  const { user } = useSelector((state) => state.user);
   const [name, setName] = useState("");
+  const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -33,15 +35,31 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const load = { name, email, phone, password, branch, sem, company };
+      const load = {
+        name,
+        userId,
+        email,
+        phone,
+        password,
+        branch,
+        sem,
+        company,
+        uiux,
+        webDev,
+        androidDev,
+        blockchain,
+        ethicalHacking,
+        softwareTesting,
+      };
 
       const config = {
         headers: {
           "content-type": "application/json",
         },
+        withCredentials: true,
       };
       dispatch(showLoading());
-      const response = await axios.post("/api/v1/register", load, config);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/register`, load, config);
 
       dispatch(hideLoading());
       if (response.data.success) {
@@ -56,6 +74,11 @@ const Signup = () => {
       toast.error(error.response.data.message);
     }
   };
+  useEffect(() => {
+    if (user) {
+      navigate("/discover");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="signup">
@@ -83,9 +106,10 @@ const Signup = () => {
               }}
               label="Name"
             />
+            <div className="d-flex">
             <TextField
               sx={{
-                width: { xs: 300, sm: 400, md: 400 },
+                width: { xs: 100, sm: 200, md: 200 },
                 "& .MuiInputBase-root": {
                   height: 50,
                 },
@@ -101,6 +125,23 @@ const Signup = () => {
               }}
               label="Email"
             />
+            <TextField
+              sx={{
+                width: { xs: 100, sm: 200, md: 200 },
+                "& .MuiInputBase-root": {
+                  height: 50,
+                },
+              }}
+              id="userId"
+              name="userId"
+              size="20"
+              value={userId}
+              onChange={(e) => {
+                setUserId(e.target.value);
+              }}
+              label="UserId"
+            />
+            </div>
             <TextField
               sx={{
                 width: { xs: 300, sm: 400, md: 400 },
@@ -159,7 +200,7 @@ const Signup = () => {
                 <MenuItem value={"GOOGLE"}>Google</MenuItem>
                 <MenuItem value={"MICROSOFT"}>Microsoft</MenuItem>
                 <MenuItem value={"PAYTM"}>Paytm</MenuItem>
-                <MenuItem value={"ANY"}>Any</MenuItem>
+                <MenuItem value={"ANY"}>Other</MenuItem>
               </Select>
             </FormControl>
             <div className="d-flex">
@@ -188,7 +229,7 @@ const Signup = () => {
                   <MenuItem value={"CHEM"}>Chemical</MenuItem>
                   <MenuItem value={"BIOTECH"}>Bio. Technology</MenuItem>
                   <MenuItem value={"TXT"}>Textile</MenuItem>
-                  <MenuItem value={"ANY"}>Any</MenuItem>
+                  <MenuItem value={"ANY"}>Other</MenuItem>
                 </Select>
               </FormControl>
               <FormControl

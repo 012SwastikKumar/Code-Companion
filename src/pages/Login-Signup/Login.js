@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, } from "react";
 import "./Login.css";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { hideLoading, showLoading } from "../../redux/alertSlice";
@@ -11,7 +11,8 @@ import { setUser } from "../../redux/userSlice";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
+  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -24,8 +25,9 @@ const Login = () => {
         headers: {
           "content-type": "application/json",
         },
+        withCredentials: true,
       };
-      const response = await axios.post("/api/v1/login", load, config);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/v1/login`, load, config);
       dispatch(hideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -40,6 +42,11 @@ const Login = () => {
       toast.error(error.response.data.message);
     }
   };
+  useEffect(() => {
+    if(user){
+      navigate("/discover");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="login">
@@ -59,10 +66,8 @@ const Login = () => {
                   height: 50,
                 },
               }}
-              type="email"
               id="email"
               name="email"
-              pattern=".+@globex\.com"
               size="30"
               value={email}
               onChange={(e) => {

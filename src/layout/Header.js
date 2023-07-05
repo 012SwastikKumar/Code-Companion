@@ -29,7 +29,12 @@ const Header = () => {
     localStorage.removeItem("token");
     token = null;
     try {
-      const response = await axios.get("/api/v1/logout");
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/logout`,
+        {
+          withCredentials: true,
+        }
+      );
       if (response.data.success) {
         dispatch(setUser(null));
         toast.success("Logged out successfully");
@@ -41,35 +46,15 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log("change");
     if (
       location.pathname === "/discover" ||
       location.pathname === "/my-profile"
     ) {
-      const isAuthenticatedUser = async () => {
-        try {
-          const response = await axios.get("/api/v1/isAuthenticatedUser");
-          if (response.data.success) {
-            dispatch(setUser(response.data.user));
-            return true;
-          } else {
-            return false;
-          }
-        } catch (error) {
-          return false;
-        }
-      };
       if (!user) {
-        if (
-          isAuthenticatedUser() === false ||
-          localStorage.getItem("token") === null
-        ) {
-          navigate("/login");
-        }
+        navigate("/login");
       }
-      
       if (location.pathname === "/my-profile") setActivePage("My Profile");
-      setActivePage("Explore");
+      else setActivePage("Explore");
     } else if (location.pathname === "/faq") setActivePage("FAQs");
     else if (location.pathname === "/doubts") setActivePage("Doubts");
     else if (location.pathname === "/about") setActivePage("About");
@@ -142,7 +127,7 @@ const Header = () => {
             <Avatar
               sx={{ width: 32, height: 32 }}
               alt="dp"
-              src={user?.avatar.url}
+              src={user?.avatar?.url}
             />
             <div className="user__name"> {user?.name}</div>
           </div>

@@ -18,7 +18,7 @@ const MyProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
   const [institute, setInstitute] = useState("");
   const [company, setCompany] = useState("");
   const [branch, setBranch] = useState("");
@@ -58,37 +58,39 @@ const MyProfile = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const load = {
-        id: user._id,
-        name,
-        email,
-        phone,
-        institute,
-        company,
-        branch,
-        year,
-        semester,
-        linkedIn,
-        instagram,
-        whatsApp,
-        facebook,
-        github,
-        portfolio,
-        uiux,
-        webDev,
-        androidDev,
-        blockchain,
-        ethicalHacking,
-        softwareTesting,
-        avatar,
-      };
+      const formData = new FormData();
+      formData.set("id", user._id);
+      formData.set("name", name);
+      formData.set("email", email);
+      // formData.set("password", password);
+      formData.set("avatar", avatar);
+      formData.set("phone", phone);
+      if (institute) formData.set("institute", institute);
+      formData.set("company", company);
+      formData.set("branch", branch);
+      if (year) formData.set("year", year);
+      formData.set("sem", semester);
+      if (linkedIn) formData.set("linkedIn", linkedIn);
+      if (instagram) formData.set("instagram", instagram);
+      if (whatsApp) formData.set("whatsApp", whatsApp);
+      if (facebook) formData.set("facebook", facebook);
+      if (github) formData.set("github", github);
+      if (portfolio) formData.set("portfolio", portfolio);
+      formData.set("uiux", uiux);
+      formData.set("webDev", webDev);
+      formData.set("androidDev", androidDev);
+      formData.set("blockchain", blockchain);
+      formData.set("ethicalHacking", ethicalHacking);
+      formData.set("softwareTesting", softwareTesting);
+
       const config = {
         headers: {
-          "content-type": "application/json",
+          "content-type": "multipart/form-data;",
         },
+        withCredentials: true,
       };
       dispatch(showLoading());
-      const response = await axios.put("/api/v1/me/update", load, config);
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/v1/me/update`, formData, config);
 
       dispatch(hideLoading());
       if (response.data.success) {
@@ -105,28 +107,9 @@ const MyProfile = () => {
 
   useEffect(() => {
     if (!user) {
-      const isAuthenticatedUser = async () => {
-        // try {
-        //   const response = await axios.get("/api/v1/isAuthenticatedUser");
-        //   if (response.data.success) {
-        //     dispatch(setUser(response.data.user));
-        //     return true;
-        //   } else {
-        //     return false;
-        //   }
-        // } catch (error) {
-        //   return false;
-        // }
-        if (localStorage.getItem("token")) {
-          return true;
-        }
-        return false;
-      };
-      if (isAuthenticatedUser() === false) {
-        navigate("/login");
-      }
+      navigate("/login");
     } else {
-      setAvatarPreview(user.avatar.url);
+      setAvatarPreview(user?.avatar?.url);
       setName(user.name);
       setEmail(user.email);
       setPhone(user.phone);
@@ -248,7 +231,7 @@ const MyProfile = () => {
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 />
               </div>
-              <div className="component">
+              {/* <div className="component">
                 <p className="component__lable">Password : </p>
                 <TextField
                   sx={{
@@ -267,7 +250,7 @@ const MyProfile = () => {
                   minLength="8"
                   type="password"
                 />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="professional__details">
@@ -373,7 +356,7 @@ const MyProfile = () => {
                     },
                   }}
                 >
-                  <InputLabel id="year-label">Sem</InputLabel>
+                  <InputLabel id="year-label">Year</InputLabel>
                   <Select
                     labelId="year-label"
                     id="year"
@@ -387,11 +370,7 @@ const MyProfile = () => {
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
                     <MenuItem value={4}>4</MenuItem>
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={6}>6</MenuItem>
-                    <MenuItem value={7}>7</MenuItem>
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={9}>Pass Out</MenuItem>
+                    <MenuItem value={5}>Pass Out</MenuItem>
                   </Select>
                 </FormControl>
               </div>

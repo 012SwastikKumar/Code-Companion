@@ -42,15 +42,17 @@ const Discover = () => {
         headers: {
           "content-type": "application/json",
         },
+        withCredentials: true,
       };
       const { data } = await axios.post(
-        "/api/v1/filtered-users",
+        `${process.env.REACT_APP_BACKEND_URL}/api/v1/filtered-users`,
         query,
         config
       );
       if (data.users.length === 0) {
         toast.error("No users found ");
       } else {
+        toast.success("Users found");
         setFilteredUsers(data.users);
       }
     } catch (error) {}
