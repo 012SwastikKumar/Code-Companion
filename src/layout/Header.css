@@ -64,3 +64,40 @@
 .active--underline{
     border-bottom: 1.5px solid rgb(26, 5, 156);
 }
+
+
+/*              Media Query for Header              */
+
+@media screen and (max-width: 1100px    ) {
+    .header {
+        padding: 0 1rem;
+        font-size: 1.2rem;
+    }
+
+    .nav__menu {
+
+    }
+
+    .brand__name {
+        font-size: 1.5rem;
+    }
+
+    .cta-header{
+        padding: .5rem 1.8rem;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .header {
+        padding: 0 1rem;
+        font-size: 1rem;
+    }
+
+    .nav__menu {
+        display: none;
+    }
+
+    .brand__name {
+        font-size: 1.5rem;
+    }
+}

@@ -50,3 +50,84 @@
         border-color: transparent;
     }
 }
+
+
+/* Media Query for Hero Section */
+
+@media screen and (max-width: 1100px){
+    .hero{
+        height: 70vh;
+    }
+
+    .hero__texts{
+        padding: 0rem 2rem 0 5rem;
+    }
+
+    .hero__texts__head{
+        font-size: 3rem;
+    }
+
+    .hero__texts__head__subhead{
+        font-size: 2rem;
+    }
+
+    .hero__texts__btn{
+        font-size: 1.2rem;
+        padding: .5rem 2rem;
+    }
+
+    .hero_image{
+        height: 30rem;
+    }
+
+}
+
+@media screen and (max-width: 700px){
+    .hero{
+        height: 75vh;
+        flex-direction: column;
+        justify-content: center;
+        gap: .5rem;
+    }
+
+    .hero__texts{
+        padding: 0rem 1rem;
+        align-items: center;
+    }
+
+    .hero__texts__head{
+        font-size: 3rem;
+    }
+
+    .hero__texts__head__subhead{
+        font-size: 2rem;
+    }
+
+    .hero__texts__btn{
+        font-size: 1.2rem;
+        padding: .5rem 2rem;
+    }
+
+    .hero_image{
+        height: 30rem;
+    }
+}
+
+@media screen and (max-width: 330px){
+    .hero{
+        gap: 1rem;
+    }
+
+
+    .hero__texts__head{
+        font-size: 2.4rem;
+    }
+
+    .hero__texts__head__subhead{
+        font-size: 1.8rem;
+    }
+
+    .hero_image{
+        width: 35rem;
+    }
+}

@@ -19,10 +19,7 @@ const Footer = () => {
         <div className="footer__container__about">
           <h1>Code Companion</h1>
           <p className="footer__container__about--text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-            inventore dolore voluptatibus, rem voluptates ut eum quaerat quasi
-            omnis quod molestias labore ipsum nostrum maiores repudiandae
-      
+          Welcome to Code-Companion! We're an online platform that connects like-minded individuals, fostering collaboration, mentorship, and inspiration. Create your profile, showcase your skills and aspirations, and find others who align with your interests. Engage in vibrant discussions, exchange ideas, and forge valuable connections within our supportive community. Join ConnectMe today to unlock endless opportunities for growth and personal development.
           </p>
           <div className="social__container">
             <Button
