@@ -54,12 +54,7 @@ const Whycc = () => {
         </div>
       </div>
       <div className="whycc__para">
-        Lorem ipsum dolor sit amet consectetur. Viverra arcu egestas sed in
-        tellus consectetur viverra. Eget dignissim varius id sit netus nibh
-        habitasse pellentesque. Elementum ut elementum lorem a imperdiet
-        molestie gravida morbi vivamus. Pellentesque ligula porta blandit
-        dignissim tempus nunc. Pharetra gravida tincidunt volutpat. imperdiet
-        molestie gravida morbi.
+      You connect with like-minded individuals who share the same skillset or aspirations, and finding mentors, offers valuable benefits. It provides access to a targeted network, facilitating learning and growth through knowledge sharing. Engaging with similar-minded individuals enhances motivation, builds a support system, and offers mentorship opportunities for guidance and accelerated progress in your chosen field.
       </div>
     </div>
   );
