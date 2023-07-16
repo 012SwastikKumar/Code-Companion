@@ -83,6 +83,17 @@ code {
   align-items: center;
 }
 
+.disabled_button{
+  background-color: #b9b9b9 !important;
+  color: #070707 !important;
+  cursor: not-allowed !important;
+}
+
+.disabled_icon{
+  color: #b9b9b9 !important;
+  cursor: not-allowed !important;
+}
+
 .u-center-text {
   text-align: center !important;
 }

@@ -20,7 +20,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [company, setCompany] = useState("");
   const [branch, setBranch] = useState("");
-  const [sem, setSem] = useState("");
+  const [sem, setSem] = useState();
 
   const [uiux, setUIUX] = useState(false);
   const [webDev, setWebDev] = useState(false);

@@ -22,8 +22,8 @@ const MyProfile = () => {
   const [institute, setInstitute] = useState("");
   const [company, setCompany] = useState("");
   const [branch, setBranch] = useState("");
-  const [year, setYear] = useState("");
-  const [semester, setSemester] = useState("");
+  const [year, setYear] = useState();
+  const [semester, setSemester] = useState();
   const [linkedIn, setLinkedIn] = useState("");
   const [instagram, setInstagram] = useState("");
   const [whatsApp, setWhatsApp] = useState("");
@@ -342,7 +342,7 @@ const MyProfile = () => {
                     <MenuItem value={"CHEM"}>Chemical</MenuItem>
                     <MenuItem value={"BIOTECH"}>Bio. Technology</MenuItem>
                     <MenuItem value={"TXT"}>Textile</MenuItem>
-                    <MenuItem value={"ANY"}>Any</MenuItem>
+                    <MenuItem value={"ANY"}>Others</MenuItem>
                   </Select>
                 </FormControl>
               </div>
@@ -391,6 +391,7 @@ const MyProfile = () => {
                     value={semester}
                     label="sem"
                     onChange={(e) => {
+                      console.log(typeof e.target.value)
                       setSemester(e.target.value);
                     }}
                   >
@@ -417,7 +418,7 @@ const MyProfile = () => {
                     type="checkbox"
                     onChange={(e) => setWebDev(e.target.checked)}
                   />
-                  <label for="skillWeb">WebDev</label>
+                  <label htmlFor="skillWeb">WebDev</label>
                   <input
                     id="skillAndroid"
                     name="skill"
@@ -426,7 +427,7 @@ const MyProfile = () => {
                     checked={androidDev}
                     onChange={(e) => setAndroidDev(e.target.checked)}
                   />
-                  <label for="skillAndroid">Android</label>
+                  <label htmlFor="skillAndroid">Android</label>
                   <input
                     id="skillSoftware"
                     name="skill"
@@ -435,7 +436,7 @@ const MyProfile = () => {
                     checked={softwareTesting}
                     onChange={(e) => setSoftwareTesting(e.target.checked)}
                   />
-                  <label for="skillSoftware">SoftwareTesting</label>
+                  <label htmlFor="skillSoftware">SoftwareTesting</label>
                 </div>
               </div>
               <div className="component">
@@ -449,7 +450,7 @@ const MyProfile = () => {
                     checked={uiux}
                     onChange={(e) => setUIUX(e.target.checked)}
                   />
-                  <label for="skillUi">UI/UX</label>
+                  <label htmlFor="skillUi">UI/UX</label>
                   <input
                     id="skillBlockchain"
                     name="skill"
@@ -458,7 +459,7 @@ const MyProfile = () => {
                     checked={blockchain}
                     onChange={(e) => setBlockchain(e.target.checked)}
                   />
-                  <label for="skillBlockchain">Blockchain</label>
+                  <label htmlFor="skillBlockchain">Blockchain</label>
                   <input
                     id="skillEthical"
                     name="skill"
@@ -467,7 +468,7 @@ const MyProfile = () => {
                     checked={ethicalHacking}
                     onChange={(e) => setEthicalHacking(e.target.checked)}
                   />
-                  <label for="skillEthical">Ethical-Hacking</label>
+                  <label htmlFor="skillEthical">Ethical-Hacking</label>
                 </div>
               </div>
             </div>

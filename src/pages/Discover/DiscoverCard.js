@@ -1,6 +1,7 @@
 import React from "react";
 import "./DiscoverCard.css";
 import { Link } from "react-router-dom";
+import Tooltip from '@mui/material/Tooltip';
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -32,10 +33,15 @@ const DiscoverCard = (props) => {
           <p className="discover__card__infos__name">{props.name}</p>
         </div>
         <div className="discover__card__infos--branch__sem">
-          <p className="discover__card__infos--branch">{"Branch:" } {props.branch === 'ANY' ? "Other" : props.branch}</p>
+          <div className="discover__card__infos--branch">
+            {"Branch:"} {props.branch === "ANY" ? "Others" : props.branch===undefined ? "N/A" : props.branch}
+          </div>
           <p className="discover__card__infos--sem">
-            {props.sem < 9 ? <span>{props.sem}th Sem</span> : <span>Pass Out</span>}
-            
+            {props.sem < 9 ? (
+              <span>{props.sem}th Sem</span>
+            ) : (
+              <span>Pass Out</span>
+            )}
           </p>
         </div>
       </div>
@@ -47,11 +53,26 @@ const DiscoverCard = (props) => {
         {props.blockchain && <Skills skill={"Blockchain"} />}
         {props.ethicalHacking && <Skills skill={"Ethical Hacking"} />}
         {props.softwareTesting && <Skills skill={"Software Testing"} />}
+        {props.webDev === false &&
+          props.uiux === false &&
+          props.androidDev === false &&
+          props.blockchain === false &&
+          props.ethicalHacking === false &&
+          props.softwareTesting === false && 
+            <Skills dis={"1"} skill={"Skills Yet to Add"} />
+        }
       </div>
 
       <div className="discover__card__social">
         <div className="discover__card__social__public">
-          {props.facebook && (
+          {props.facebook === undefined ? 
+            <Tooltip title="User Has Not Shared Their Contact Info.">
+            <FacebookIcon
+              className="disabled_icon"
+              style={{ fontSize: "3rem" }}
+            />
+            </Tooltip>
+          : (
             <Link to={props.facebook} target="_blank">
               {" "}
               <FacebookIcon
@@ -60,7 +81,15 @@ const DiscoverCard = (props) => {
               />
             </Link>
           )}
-          {props.linkedIn && (
+          {props.linkedIn === undefined ?
+          <Tooltip title="User Has Not Shared Their Contact Info.">
+            <LinkedInIcon
+              className="disabled_icon"
+              style={{ fontSize: "3rem" }}
+            /> 
+          </Tooltip>
+            :
+           (
             <Link to={props.linkedIn} target="_blank">
               {" "}
               <LinkedInIcon
@@ -69,7 +98,14 @@ const DiscoverCard = (props) => {
               />
             </Link>
           )}
-          {props.portfolio && (
+          {props.portfolio === undefined ? (
+            <Tooltip title="User Has Not Shared Their Contact Info.">
+            <LanguageIcon
+              className="disabled_icon"
+              style={{ fontSize: "3rem" }}
+            />
+            </Tooltip>
+          ) : (
             <Link to={props.portfolio} target="_blank">
               <LanguageIcon
                 className="discover__card__social__public--icons"
@@ -77,7 +113,15 @@ const DiscoverCard = (props) => {
               />
             </Link>
           )}
-          {props.github && (
+          {props.github === undefined ? (
+            <Tooltip title="User Has Not Shared Their Contact Info.">
+            <GitHubIcon
+              className="disabled_icon"
+              title="User Has Not Shared Their Contact Info."
+              style={{ fontSize: "3rem" }}
+            />
+            </Tooltip>
+          ) : (
             <Link to={props.github} target="_blank">
               {" "}
               <GitHubIcon
@@ -87,7 +131,14 @@ const DiscoverCard = (props) => {
             </Link>
           )}
         </div>
-        {props.whatsApp && (
+        {props.whatsApp === undefined ? (
+          <div className="discover__card__social__private">
+            <button title="Sorry!! User Has Not Shared Their Contact Info." className="discover__card__social__private--message disabled_button">
+              <WhatsAppIcon className="discover__card__social__private--icon" />{" "}
+              Message
+            </button>
+          </div>
+        ) : (
           <div className="discover__card__social__private">
             <button
               className="discover__card__social__private--message"
