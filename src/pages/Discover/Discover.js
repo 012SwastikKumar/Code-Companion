@@ -8,6 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { toast } from "react-hot-toast";
 
 const Discover = () => {
@@ -20,6 +22,7 @@ const Discover = () => {
   const [branch, setBranch] = useState("ANY");
   const [semester, setSemester] = useState(0);
   const [company, setCompany] = useState("ANY");
+  const [open, setOpen] = useState(true);
 
   const [filteredUsers, setFilteredUsers] = useState([]);
 
@@ -60,10 +63,16 @@ const Discover = () => {
   return (
     <div className="discover">
       <div className="discover__body">
+      {open ?  
         <div className="left-contents">
           <form onSubmit={submitHandler}>
             <div className="left__head">
               <h2>Filters</h2>
+              <div className="close_btn" onClick={(e) => {
+                setOpen(!open);
+              }}>
+                <CloseRoundedIcon fontSize="large" />
+              </div>
             </div>
             <div className="filter__container">
               <h3>Skills</h3>
@@ -259,6 +268,15 @@ const Discover = () => {
             </button>
           </form>
         </div>
+
+        : 
+        <div className="menu_btn" onClick={ (e) => {
+          setOpen(!open)
+        }}>
+                <MenuRoundedIcon fontSize="large" />
+              </div>
+
+                  }
 
         <div className="right-contents">
           {filteredUsers?.map((person, index) => {
