@@ -91,3 +91,27 @@
     border-radius: 10rem;
     color: white;
 }
+
+/* Media Queries */
+
+@media screen and (max-width: 840px){
+    .discover__card{
+        width: 28rem;
+        justify-content: space-evenly;
+    }
+}
+
+@media screen and (max-width: 700px){
+    .discover__card{
+        width: 32rem;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 330px){
+    .discover__card{
+        font-size: 1.2rem;
+        width: 28rem;
+        justify-content: center;
+    }
+}

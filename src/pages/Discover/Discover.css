@@ -24,6 +24,41 @@
     background-color: rgb(26, 5, 156);
 }
 
+.left__head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(210, 210, 210);
+    border-radius: 100rem;
+    padding: .5rem;
+    margin: 2rem;
+}
+
+.menu_btn:hover{
+    background-color: rgb(0, 62, 207);
+    color: white;
+    cursor: pointer;
+}
+
+.close_btn{
+    border-radius: 100rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    background-color: rgb(20, 4, 130);
+}
+
+.close_btn:hover{
+    background-color: rgb(31, 0, 235);
+    cursor: pointer;
+}
 
 .filter__container{
     padding: 1rem;
@@ -54,9 +89,52 @@
 
 .right-contents{
     height: max-content;
-    padding: 3rem 0rem;
+    padding: 3rem 3rem 3rem 0;
     display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
-    gap: 5rem;
+    gap: 3rem;
     border-radius: .2rem;
+}
+
+/* Media Query for Discover */
+
+@media screen and (max-width: 1100px){
+    
+
+}
+
+@media screen and (max-width: 700px){
+    .discover{
+        padding-top: 3rem;
+    }
+    .menu_btn{
+        margin: 2rem;
+        display: flex;
+    }
+    .close_btn{
+        display: flex;
+    }
+
+    .left-contents{
+        min-width: 25rem;
+    }
+}
+
+@media screen and (max-width: 430px){
+    .discover__body{
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .menu_btn{
+        margin: 6rem auto 0 auto;
+    }
+    .left-contents{
+        margin-top: 2rem;
+    }
+
+    .right-contents{
+        justify-content: center;
+        padding: 0;
+    }
 }
