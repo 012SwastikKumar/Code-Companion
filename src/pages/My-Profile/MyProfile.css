@@ -165,7 +165,7 @@
         margin: 0;
         padding: 0 3rem 0 0;
         flex-wrap: wrap;
-        /* justify-content: right; */
+        justify-content: right;
     }
     .profile__img{
         height: 8rem;
