@@ -104,15 +104,59 @@
 /* Media Query for My Profile */
 
 @media screen and (max-width: 1100px){
+    .my__profile{
+        font-size: 1.4rem;
+        padding-top: 8rem;
+    }
+    .profile__container{
+        margin: 0;
+        flex-wrap: wrap;
+    }
+    .profile__img{
+        height: 10rem;
+        width: 10rem;
+    }
 
-
+    .details__container{
+        padding: 2rem;
+    }
+    
+    .personal__details, .professional__details, .social__details {
+        padding: 0 0 0 4rem;
+        margin: 4rem 0;
+    }
+    
+    .personal__details__component, .professional__details__component, .social__details__component{
+        padding: 2rem;
+        gap: 1.4rem;
+    }
+    
+    .heading__section{
+        font-size: 2rem;
+    }
+    .component{
+        justify-content: flex-start;
+        gap: 4rem;
+    }
+    
+    .component__lable{
+        font-size: 1.3rem;
+        font-weight: 400;
+    }
+    
+    .skills__container__my__profile{
+        font-size: 1.15rem;
+    }
 }
 
 @media screen and (max-width: 700px){
-    
+    .profile__img{
+        height: 8rem;
+        width: 8rem;
+    }
 }
 
-@media screen and (max-width: 330px){
+@media screen and (max-width: 460px){
     .my__profile{
         font-size: 1.4rem;
         padding-top: 8rem;
@@ -126,5 +170,42 @@
     .profile__img{
         height: 8rem;
         width: 8rem;
+    }
+    .buttons{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .details__container{
+        padding: 2rem;
+    }
+    
+    .personal__details, .professional__details, .social__details {
+        padding: 0;
+        margin: 4rem 0;
+    }
+    
+    .personal__details__component, .professional__details__component, .social__details__component{
+        padding: 2rem;
+        gap: 1rem;
+    }
+    
+    .heading__section{
+        font-size: 1.8rem;
+    }
+    .component{
+        width: 85vw;
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+    
+    .component__lable{
+        font-size: 1rem;
+        font-weight: 400;
+    }
+    
+    .skills__container__my__profile{
+        font-size: 1rem;
     }
 }
